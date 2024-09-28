@@ -328,47 +328,39 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
+            const highlightedElements = document.querySelectorAll('.highlight-gradient');
             const header = document.querySelector('.header');
             let lastScrollTop = 0;
 
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.remove('in-view');
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+
+            highlightedElements.forEach(el => {
+                observer.observe(el);
+            });
+
             window.addEventListener('scroll', () => {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
+
                 if (scrollTop > lastScrollTop && scrollTop > 80) {
-                    header.style.transform = 'translateY(-100%)';
+                    // Scrolling down
+                    header.classList.add('hidden');
                 } else {
-                    header.style.transform = 'translateY(0)';
+                    // Scrolling up or at the top
+                    header.classList.remove('hidden');
                 }
-                
+
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             }, false);
-
-            // Hamburger menu functionality
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-            const body = document.body;
-
-            hamburger.addEventListener('click', (event) => {
-                event.stopPropagation();
-                navLinks.classList.toggle('active');
-                body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-            });
-
-            // Close menu when a link is clicked
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    body.style.overflow = '';
-                });
-            });
-
-            // Close menu when clicking outside
-            document.addEventListener('click', (event) => {
-                if (!event.target.closest('.header-content') && !event.target.closest('.nav-links')) {
-                    navLinks.classList.remove('active');
-                    body.style.overflow = '';
-                }
-            });
         });
     </script>
 </body>

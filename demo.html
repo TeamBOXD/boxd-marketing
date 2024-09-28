@@ -264,6 +264,36 @@
                 display: none; /* Hide the Join button on mobile */
             }
         }
+
+        .mobile-home-link {
+            display: none; /* Hide by default */
+        }
+
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .mobile-home-link {
+                display: none !important; /* Ensure it's hidden on desktop */
+            }
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide the original nav links on mobile */
+            }
+
+            .mobile-home-link {
+                display: block; /* Show only on mobile */
+                color: var(--primary-color);
+                text-decoration: none;
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+
+            .join-button {
+                display: none; /* Hide the Join button on mobile */
+            }
+        }
     </style>
 </head>
 <body>

@@ -322,10 +322,30 @@
 
             .nav-links {
                 display: none;
+                position: fixed;
+                top: 80px; /* Adjust this value to match your header height */
+                left: 0;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.95);
+                padding: 20px;
+                text-align: center;
+                z-index: 2000;
             }
 
-            .header-content {
-                justify-content: space-between;
+            .nav-links.active {
+                display: block;
+            }
+
+            .nav-links a {
+                display: inline-block;
+                margin: 10px 0;
+                font-size: 1.2rem;
+                color: var(--text-color);
+                text-decoration: none;
+            }
+
+            .header {
+                z-index: 2001;
             }
 
             .join-button {
@@ -339,6 +359,44 @@
 
             .partner-logos img {
                 height: 60px;
+            }
+
+            .join-button {
+                display: none; /* Hide the Join button on mobile */
+            }
+
+            .feature-container.simplified-compliance {
+                gap: 2rem;
+            }
+
+            .feature-container.simplified-compliance p,
+            .feature-container.simplified-compliance h2 {
+                margin-left: 0; /* Remove left margin for mobile */
+                text-align: center; /* Center the text */
+            }
+
+            .hamburger {
+                margin-left: auto;
+                margin-right: 15px; /* Add some right margin */
+            }
+
+            .nav-links {
+                top: 80px; /* Position the menu right below the header */
+                max-height: calc(100vh - 80px); /* Limit the height to viewport height minus header height */
+                overflow-y: auto; /* Allow scrolling if menu items exceed screen height */
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background-color: rgba(0, 0, 0, 0.9);
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 80px;
+                bottom: 0;
+                z-index: 1000;
             }
         }
 
@@ -363,14 +421,6 @@
 
             .nav-links {
                 display: none;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                right: 0;
-                background-color: rgba(0, 0, 0, 0.9);
-                flex-direction: column;
-                align-items: center;
-                padding: 1rem;
             }
 
             .nav-links.active {
@@ -379,6 +429,31 @@
 
             .nav-links a {
                 margin: 0.5rem 0;
+                font-size: 1.2rem; /* Increase font size for better touch targets */
+            }
+        }
+
+        /* Remove hamburger menu styles */
+        .hamburger {
+            display: none;
+        }
+
+        /* Adjust the mobile styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide the original nav links on mobile */
+            }
+
+            .mobile-demo-link {
+                display: block;
+                color: var(--primary-color);
+                text-decoration: none;
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+
+            .join-button {
+                display: none; /* Hide the Join button on mobile */
             }
         }
     </style>
@@ -392,11 +467,7 @@
                     <a href="demo.html">See BOXD in action</a>
                 </nav>
                 <button class="join-button">Join</button>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+                <a href="demo.html" class="mobile-demo-link">Demo</a>
             </div>
         </header>
         <section class="hero-container">
@@ -460,64 +531,5 @@
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const highlightedElements = document.querySelectorAll('.highlight-gradient');
-            const header = document.querySelector('.header');
-            let lastScrollTop = 0;
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                    } else {
-                        entry.target.classList.remove('in-view');
-                    }
-                });
-            }, {
-                threshold: 0.5
-            });
-
-            highlightedElements.forEach(el => {
-                observer.observe(el);
-            });
-
-            window.addEventListener('scroll', () => {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (scrollTop > lastScrollTop && scrollTop > 80) {
-                    // Scrolling down
-                    header.style.transform = 'translateY(-100%)';
-                } else {
-                    // Scrolling up or at the top
-                    header.style.transform = 'translateY(0)';
-                }
-                
-                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-            }, false);
-
-            // Hamburger menu functionality
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-
-            hamburger.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-
-            // Close menu when a link is clicked
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                });
-            });
-
-            // Close menu when clicking outside
-            document.addEventListener('click', (event) => {
-                if (!event.target.closest('.header-content')) {
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
-    </script>
 </body>
 </html>

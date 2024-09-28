@@ -166,6 +166,104 @@
             color: white;
             transform: scale(1.05);
         }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 80px; /* Adjust this value to match your header height */
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: rgba(0, 0, 0, 0.95); /* Almost opaque black background */
+                padding: 10px 20px;
+                border-radius: 8px;
+                text-align: center;
+                z-index: 2000; /* Ensure it's above other content */
+                width: auto;
+                white-space: nowrap;
+            }
+
+            .nav-links.active {
+                display: block;
+            }
+
+            .nav-links a {
+                display: block;
+                margin: 10px 0;
+                font-size: 1.2rem;
+                color: var(--text-color);
+                text-decoration: none;
+            }
+
+            .header {
+                z-index: 2001;
+            }
+
+            .join-button {
+                display: none; /* Hide the Join button on mobile */
+            }
+
+            .demo-container h1 {
+                font-size: 2.5rem;
+            }
+
+            .video-container {
+                padding-bottom: 56.25%; /* 16:9 aspect ratio */
+                max-width: 100%;
+            }
+
+            .waitlist-form h2 {
+                font-size: 2rem;
+            }
+
+            .cta-form {
+                padding: 0 1rem;
+            }
+
+            .cta-form input,
+            .cta-button {
+                font-size: 1rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .hamburger {
+                margin-left: auto; /* Push hamburger to the right */
+                margin-right: 15px; /* Add some right margin */
+            }
+        }
+
+        /* Remove hamburger menu styles */
+        .hamburger {
+            display: none;
+        }
+
+        /* Adjust the mobile styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide the original nav links on mobile */
+            }
+
+            .mobile-home-link {
+                display: block;
+                color: var(--primary-color);
+                text-decoration: none;
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+
+            .join-button {
+                display: none; /* Hide the Join button on mobile */
+            }
+        }
     </style>
 </head>
 <body>
@@ -175,9 +273,9 @@
                 <div class="logo">BOXD.</div>
                 <nav class="nav-links">
                     <a href="index.html">Home</a>
-                    
                 </nav>
                 <button class="join-button">Join</button>
+                <a href="index.html" class="mobile-home-link">Home</a>
             </div>
         </header>
         
@@ -214,6 +312,33 @@
                 
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             }, false);
+
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+
+            hamburger.addEventListener('click', (event) => {
+                event.stopPropagation();
+                navLinks.classList.toggle('active');
+                body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            });
+
+            // Close menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    body.style.overflow = '';
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.header-content') && !event.target.closest('.nav-links')) {
+                    navLinks.classList.remove('active');
+                    body.style.overflow = '';
+                }
+            });
         });
     </script>
 </body>

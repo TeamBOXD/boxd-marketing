@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOXD Demo - Simplifying Municipal Regulations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff3d35;
+            --secondary-color: #ff8a4b;
+            --text-color: #FFFFFF;
+            --light-text-color: #AAAAAA;
+            --highlight-color: #FF5733;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('img/Dark\ Gradient\ 12.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-color);
+            padding-top: 80px;
+        }
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 2rem;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 80px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            width: 100%;
+            box-sizing: border-box;
+            height: 100%;
+            background-color: transparent;
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 3.5rem;
+            color: var(--primary-color);
+        }
+        .demo-container {
+            text-align: center;
+            margin-top: 0; /* Changed from 4rem to 0 */
+            width: 100%; /* Ensure the container takes full width */
+        }
+        .demo-container h1 {
+            margin-top: 0; /* Add this to remove any top margin from the h1 */
+            padding-top: 1rem; /* Add a small padding to give some breathing room */
+            font-size: 4rem;
+            margin-bottom: 2rem;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 34%; /* Changed from 50% to 45% for an even shorter height */
+            height: 0;
+            overflow: hidden;
+            max-width: 73%; /* Keeping the wide setting */
+            margin: 0 auto;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+        }
+        .waitlist-form {
+            margin-top: 4rem;
+            text-align: center;
+        }
+        .waitlist-form h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .cta-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+        .cta-form input {
+            padding: 1.5rem 2rem;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            font-size: 1.2rem;
+            border-radius: 40px;
+        }
+        .cta-button {
+            background: linear-gradient(155deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 1.5rem 3rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 40px;
+            transition: transform 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+        .highlight-gradient {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            position: absolute; /* Add this */
+            left: 50%; /* Add this */
+            transform: translateX(-50%); /* Add this */
+        }
+        .nav-links a {
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-size: 1.5rem; /* Increased font size */
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        .join-button {
+            background: transparent;
+            border: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: auto;
+        }
+        .join-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">BOXD.</div>
+                <nav class="nav-links">
+                    <a href="homepage.html">Home</a>
+                    
+                </nav>
+                <button class="join-button">Join</button>
+            </div>
+        </header>
+        
+        <section class="demo-container">
+            <h1>See <span class="highlight-gradient">BOXD</span> in action</h1>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/your-video-id" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="waitlist-form">
+            <h2>Join the <span class="highlight-gradient">Waitlist</span></h2>
+            <form class="cta-form">
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email Address">
+                <button type="submit" class="cta-button">Join Now</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const header = document.querySelector('.header');
+            let lastScrollTop = 0;
+
+            window.addEventListener('scroll', () => {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 80) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            }, false);
+        });
+    </script>
+</body>
+</html>

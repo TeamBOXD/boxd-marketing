@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOXD - Simplifying Municipal Regulations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff3d35;
+            --secondary-color: #ff8a4b; /* A lighter orange for the gradient */
+            --text-color: #FFFFFF;
+            --light-text-color: #AAAAAA;
+            --highlight-color: #FF5733; /* Same as primary color, but you can change this */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('img/Dark\ Gradient\ 12.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-color);
+            padding-top: 80px; /* Adjust this value based on your header height */
+        }
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 2rem;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.5); /* Changed from rgba(0, 0, 0, 0.5) to transparent */
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 80px; /* Set a fixed height for the header */
+            transition: transform 0.3s ease-in-out;
+        }
+        .header.hidden {
+            transform: translateY(-100%);
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            width: 100%;
+            box-sizing: border-box;
+            height: 100%; /* Make sure the content takes full height of the header */
+            background-color: transparent; /* Add this line to ensure transparency */
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            position: absolute; /* Add this */
+        left: 50%; /* Add this */
+        transform: translateX(-50%); /* Add this */
+        }
+        .nav-links a {
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-size: 1.5rem; /* Increased font size */
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 3.5rem;
+            color: var(--primary-color);
+        }
+        .join-button {
+            background: transparent;
+            border: 3px solid var(--primary-color); /* Further increased border width */
+            color: var(--primary-color);
+            padding: 1rem 2rem; /* Further increased padding */
+            border-radius: 30px; /* Further increased border radius */
+            cursor: pointer;
+            font-size: 1.3rem; /* Further increased font size */
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase; /* Added to make it more prominent */
+            letter-spacing: 1px; /* Added for better text spacing */
+            margin-left: auto; /* This will push the button to the far right */
+        }
+        .join-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05); /* Added slight scale effect on hover */
+        }
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6rem;
+            min-height: 300px;
+            gap: 4rem; /* Added to create space between content and image */
+            
+            padding-bottom: 1rem;
+        }
+        .hero-content {
+            flex: 1.2; /* Increased from 1 to give more space to content */
+            padding-left: 200px; /* Removed padding */
+        }
+        .hero-image {
+            flex: 0.8; /* Decreased from 1 to balance with content */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 38px;
+        }
+        .hero h1 {
+            font-size: 7rem;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .hero h1 .highlight {
+            color: var(--primary-color);
+        }
+        .hero p {
+            font-size: 2rem;
+            color: var(--light-text-color);
+            margin-bottom: 3rem;
+        }
+        .cta-form {
+            display: flex;
+            max-width: 600px;
+            width: 100%;
+            background: linear-gradient(155deg, var(--secondary-color), var(--primary-color));
+            border-radius: 40px;
+            overflow: hidden;
+            padding: 3px;
+        }
+        .cta-form input {
+            flex-grow: 1;
+            padding: 1.5rem 2rem;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2); /* Lighter background for input */
+            color: var(--text-color);
+            font-size: 1.2rem;
+            border-radius: 37px 0 0 37px;
+        }
+        .cta-form input::placeholder {
+            color: rgba(0, 0, 0, 0.8); /* Darker text for placeholder */
+        }
+        .cta-button {
+            background-color: rgba(0, 0, 0, 0.2); /* Darker background for button */
+            color: white;
+            padding: 1.5rem 3rem;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 0 37px 37px 0;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: rgba(0, 0, 0, 0.3); /* Even darker on hover */
+        }
+        .feature-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6rem; /* Increased from 4rem for more vertical spacing */
+            min-height: 500px; /* Increased from 400px to accommodate larger content */
+            gap: 6rem; /* Increased from 4rem for more space between image and content */
+        }
+        .feature-content {
+            flex: 1; /* Changed from 1.2 to give equal space to image and content */
+        }
+        .feature-image {
+            flex: 1; /* Changed from 0.8 to give equal space to image and content */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .feature-image img {
+            max-width: 100%; /* Allows image to be as large as possible within its container */
+            height: auto;
+        }
+        .feature-content h2 {
+            font-size: 3.5rem; /* Increased from 2.5rem */
+            margin-bottom: 1rem; /* Increased from 0.75rem */
+            line-height: 1.2; /* Added for better readability with larger font */
+        }
+        .feature-content p {
+            font-size: 1.5rem; /* Increased from 1.25rem */
+            color: var(--light-text-color);
+            line-height: 1.5; /* Added for better readability with larger font */
+        }
+        .partners {
+            margin-top: 3rem; /* Reduced from 4rem */
+            text-align: center;
+            width: 100%; /* Added to ensure full width */
+        }
+        .partners p {
+            color: var(--light-text-color);
+            margin-bottom: 1rem;
+        }
+        .partner-logos {
+            display: flex;
+            justify-content: space-between; /* Changed from center to space-between */
+            align-items: center;
+            gap: 2rem; /* Increased from 1.5rem for more space between logos */
+            flex-wrap: wrap; /* Added to allow wrapping on smaller screens */
+        }
+        .partner-logos img {
+            height: 95px; /* Increased from 18px */
+            opacity: 0.7;
+            transition: opacity 0.3s ease; /* Added for smooth hover effect */
+        }
+        .partner-logos img:hover {
+            opacity: 1; /* Optional: full opacity on hover */
+        }
+        
+        /* New styles for specific feature sections */
+        .feature-container.rock-solid {
+            gap: 6rem; /* Increase gap for Rock Solid Security */
+        }
+        .feature-container.simplified-compliance {
+            gap: 2rem; /* Decrease gap for Simplified Compliance */
+        }
+        .feature-container.simplified-compliance p{
+            margin-left: 200px;
+        }
+        .feature-container.simplified-compliance h2 {
+            margin-left: 200px;
+        }
+        
+        .highlight-gradient {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            display: inline-block;
+            position: relative;
+        }
+
+        .highlight-gradient::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .highlight-gradient.in-view::after {
+            transform: scaleX(1);
+        }
+
+        .hero-container h1{
+            font-size: 5.5rem;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-container p{
+            font-size: 1.5rem;
+            color: var(--light-text-color);
+            margin-bottom: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">BOXD.</div>
+                <nav class="nav-links">
+                    <a href="demo.html">See BOXD in action</a>
+                  
+                </nav>
+                <button class="join-button">Join</button>
+            </div>
+        </header>
+        <section class="hero-container">
+            <div class="hero-content">
+                <h1><span class="highlight-gradient">Simplifying</span> the way you meet municipal compliance.</h1>
+                <p>Multiple municipalities, multiple documents, <span class="highlight-gradient">one platform.</span></p>
+                <form class="cta-form">
+                    <input type="email" placeholder="Enter your Email Address">
+                    <button type="submit" class="cta-button">Join the waitlist</button>
+                </form>
+            </div>
+            <div class="hero-image">
+                <img src="img/logo.png" alt="Hero Image">
+            </div>
+        </section>
+        
+        <section class="feature-container">
+            <div class="feature-image">
+                <img src="img/Consolidated Processesconsol.png" alt="Rock Solid Security">
+            </div>
+            <div class="feature-content">
+                <h2>All in once place, <span class="highlight-gradient">right here</span></h2>
+                <p>BOXD bundles your municipal documents with a sprinkle of magic,</p>
+                <p>transforming dull paperwork into a delightful package that's more</p>
+                <p>exciting than finding an extra fry at the bottom of the bag!</p>
+            </div>
+        </section>
+
+        <section class="feature-container simplified-compliance">
+            <div class="feature-content">
+                <h2>From you to them, <span class="highlight-gradient">in a snap</span></h2>
+                <p>Experience lightning-fast, secure transactions! Our system boxes up</p>
+                <p>your payments and delivers them to the municipality with the speed</p>
+                <p>of a champion boxer and the security of a fortified vault.</p>
+            </div>
+            <div class="feature-image">
+                <img src="img/Payment Solutionspayments.png" alt="Simplified Compliance">
+            </div>
+        </section>
+
+        <section class="feature-container">
+            <div class="feature-image">
+                <img src="img/Championchampion.png" alt="Automated Processes">
+            </div>
+            <div class="feature-content">
+                <h2>Think outside the <span class="highlight-gradient">BOXD</span></h2>
+                <p>Say goodbye to boring paperwork! Our smart automation</p>
+                <p>makes your work flow smoother than a buttered slide.</p>
+            </div>
+        </section>
+
+        <div class="partners">
+            <p>Given the enormous support from top global leaders</p>
+            <div class="partner-logos">
+                <img src="https://images.squarespace-cdn.com/content/v1/6577ba00bd4d54769340a111/85d980b9-463b-48cc-bcb1-a50dfbb9b36d/IMG_6952.PNG?format=1500w" alt="eBay">
+                <img src="https://rauschcolemanhomes.com/images/logo-fullColor.svg" alt="Rausch Coleman Homes">
+                <img src="img/paschal.png" alt="Paschal H&A">
+                <img src="img/bhe.png" alt="BlackHills">
+                <img src="https://buffalo.builders/wp-content/uploads/2024/04/buffalo_square-removebg-preview.png" alt="Buffalo">
+               
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const highlightedElements = document.querySelectorAll('.highlight-gradient');
+            const header = document.querySelector('.header');
+            let lastScrollTop = 0;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.remove('in-view');
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+
+            highlightedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            window.addEventListener('scroll', () => {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 80) {
+                    // Scrolling down
+                    header.classList.add('hidden');
+                } else {
+                    // Scrolling up or at the top
+                    header.classList.remove('hidden');
+                }
+                
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            }, false);
+        });
+    </script>
+</body>

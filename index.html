@@ -280,6 +280,107 @@
             color: var(--light-text-color);
             margin-bottom: 3rem;
         }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero-container, .feature-container {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 2rem 1rem;
+            }
+
+            .hero-content, .feature-content {
+                padding-left: 0;
+                text-align: center;
+            }
+
+            .hero-container h1 {
+                font-size: 3rem;
+            }
+
+            .hero-container p {
+                font-size: 1.2rem;
+            }
+
+            .feature-content h2 {
+                font-size: 2.5rem;
+            }
+
+            .feature-content p {
+                font-size: 1.2rem;
+            }
+
+            .cta-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cta-form input, .cta-button {
+                border-radius: 20px;
+                margin-bottom: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .header-content {
+                justify-content: space-between;
+            }
+
+            .join-button {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .partner-logos img {
+                height: 60px;
+            }
+        }
+
+        /* Hamburger menu for mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 2px 0;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.9);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -289,9 +390,13 @@
                 <div class="logo">BOXD.</div>
                 <nav class="nav-links">
                     <a href="demo.html">See BOXD in action</a>
-                  
                 </nav>
                 <button class="join-button">Join</button>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </header>
         <section class="hero-container">
@@ -390,6 +495,29 @@
                 
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             }, false);
+
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.header-content')) {
+                    navLinks.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
+</html>

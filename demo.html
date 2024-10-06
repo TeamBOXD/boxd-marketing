@@ -318,9 +318,9 @@
 
         <section class="waitlist-form">
             <h2>Schedule a <span class="highlight-gradient">Demo</span></h2>
-            <form class="cta-form">
-                <input type="text" placeholder="Your Name">
-                <input type="email" placeholder="Your Email Address">
+            <form class="cta-form" id="demoForm">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email Address" required>
                 <button type="submit" class="cta-button">Schedule</button>
             </form>
         </section>
@@ -361,6 +361,45 @@
 
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             }, false);
+
+            const demoForm = document.getElementById('demoForm');
+            
+            if (demoForm) {
+                demoForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(demoForm);
+
+                    // Get the user's IP address
+                    fetch('https://api.ipify.org?format=json')
+                        .then(response => response.json())
+                        .then(data => {
+                            formData.append('ip', data.ip);
+
+                            // Replace this URL with your Google Apps Script web app URL
+                            const scriptUrl = 'https://script.google.com/macros/s/AKfycbxcK19rUjq1HZsN2QwHtufIbGwOn28o8XVlGAltCZeQx1ZmvRKHdUFBHUb5cbS0XAb6AA/exec';
+
+                            fetch(scriptUrl, {
+                                method: 'POST',
+                                mode: 'no-cors',
+                                body: formData
+                            })
+                            .then(response => {
+                                console.log('Demo request submitted successfully');
+                                alert('Thank you for your interest! We will contact you soon to schedule a demo.');
+                                demoForm.reset();
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('An error occurred. Please try again.');
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error getting IP:', error);
+                            alert('An error occurred. Please try again.');
+                        });
+                });
+            }
         });
     </script>
 </body>

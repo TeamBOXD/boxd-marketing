@@ -176,15 +176,16 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 6rem; /* Increased from 4rem for more vertical spacing */
-            min-height: 500px; /* Increased from 400px to accommodate larger content */
-            gap: 6rem; /* Increased from 4rem for more space between image and content */
+            margin-bottom: 6rem;
+            min-height: 500px;
+            gap: 6rem;
         }
         .feature-content {
-            flex: 1; /* Changed from 1.2 to give equal space to image and content */
+            flex: 1;
+            max-width: 50%; /* Limit the width of the content */
         }
         .feature-image {
-            flex: 1; /* Changed from 0.8 to give equal space to image and content */
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -194,19 +195,21 @@
             height: auto;
         }
         .feature-content h2 {
-            font-size: 3.5rem; /* Increased from 2.5rem */
-            margin-bottom: 1rem; /* Increased from 0.75rem */
-            line-height: 1.2; /* Added for better readability with larger font */
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
         }
-        .feature-content p {
-            font-size: 1.5rem; /* Increased from 1.25rem */
+        .feature-content .feature-text {
+            font-size: 1.5rem;
             color: var(--light-text-color);
-            line-height: 1.5; /* Added for better readability with larger font */
+            line-height: 1.5;
         }
         .partners {
-            margin-top: 3rem; /* Reduced from 4rem */
+            margin-top: 3rem;
             text-align: center;
-            width: 100%; /* Added to ensure full width */
+            width: 100%;
+            position: relative;
+            z-index: 10; /* Ensure the partners section is above the background */
         }
         .partners p {
             color: var(--light-text-color);
@@ -214,18 +217,19 @@
         }
         .partner-logos {
             display: flex;
-            justify-content: space-between; /* Changed from center to space-between */
+            justify-content: space-between;
             align-items: center;
-            gap: 2rem; /* Increased from 1.5rem for more space between logos */
-            flex-wrap: wrap; /* Added to allow wrapping on smaller screens */
+            gap: 2rem;
+            flex-wrap: wrap;
         }
         .partner-logos img {
-            height: 95px; /* Increased from 18px */
-            opacity: 0.7;
-            transition: opacity 0.3s ease; /* Added for smooth hover effect */
+            height: 95px;
+            transition: opacity 0.3s ease;
+            filter: none; /* Remove any existing filters */
+            opacity: 1; /* Set full opacity */
         }
         .partner-logos img:hover {
-            opacity: 1; /* Optional: full opacity on hover */
+            transform: scale(1.05); /* Optional: add a slight scale effect on hover */
         }
         
         /* New styles for specific feature sections */
@@ -233,13 +237,27 @@
             gap: 6rem; /* Increase gap for Rock Solid Security */
         }
         .feature-container.simplified-compliance {
-            gap: 2rem; /* Decrease gap for Simplified Compliance */
+            flex-direction: row-reverse;
+            gap: 2rem;
         }
-        .feature-container.simplified-compliance p{
-            margin-left: 200px;
+        .feature-container.simplified-compliance .feature-content {
+            flex: 1;
+            padding-right: 2rem;
+            max-width: 50%;
         }
-        .feature-container.simplified-compliance h2 {
-            margin-left: 200px;
+        .feature-container.simplified-compliance .feature-image {
+            flex: 1;
+        }
+        .feature-container.simplified-compliance h2,
+        .feature-container.simplified-compliance .feature-text {
+            text-align: left;
+            margin-left: 0;
+        }
+        .feature-text {
+            font-size: 1.5rem;
+            color: var(--light-text-color);
+            line-height: 1.5;
+            margin-top: 1rem;
         }
         
         .highlight-gradient {
@@ -486,9 +504,170 @@
                 display: none; /* Hide the Join button on mobile */
             }
         }
+
+        /* Loading Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Modal Styles */
+        .success-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease-out;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-modal-content {
+            background-color: rgba(0, 0, 0, 0.5);
+            margin: 1vh auto;
+            padding: 13px;
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 94vh;
+            overflow-y: auto;
+            text-align: center;
+            animation: scaleIn 0.3s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .success-modal-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .success-modal-content p {
+            color: var(--light-text-color);
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+
+        .gif-container {
+            margin-bottom: 25px;
+        }
+
+        .celebration-gif {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .cta-button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-radius: 40px;
+            color: white;
+        }
+
+        .close-button {
+            background: var(--primary-color);
+        }
+
+        .demo-button {
+            background: var(--secondary-color);
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(155deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .highlight-gradient {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        /* Remove any left margin for the simplified-compliance section */
+        .feature-container.simplified-compliance .feature-content {
+            margin-left: 0;
+        }
+
+        /* Add this new style for the background */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Update the container style */
+        .container {
+            position: relative;
+            z-index: 2; /* Ensure the content is above the background overlay */
+            background-color: transparent; /* Remove the background from the container */
+        }
     </style>
 </head>
 <body>
+    <div class="background-overlay"></div>
     <div class="container">
         <header class="header">
             <div class="header-content">
@@ -496,7 +675,7 @@
                 <nav class="nav-links">
                     <a href="demo.html">See BOXD in action</a>
                 </nav>
-                <button class="join-button">Join</button>
+                <button class="join-button" id="joinButton">Join</button>
                 <a href="demo.html" class="mobile-demo-link">Demo</a>
             </div>
         </header>
@@ -504,8 +683,8 @@
             <div class="hero-content">
                 <h1><span class="highlight-gradient">Simplifying</span> the way you meet municipal compliance.</h1>
                 <p>Multiple municipalities, multiple documents, <span class="highlight-gradient">one platform.</span></p>
-                <form class="cta-form">
-                    <input type="email" placeholder="Enter your Email Address">
+                <form class="cta-form" id="waitlistForm">
+                    <input type="email" name="email" placeholder="Enter your Email Address" required>
                     <button type="submit" class="cta-button">Join the waitlist</button>
                 </form>
             </div>
@@ -520,18 +699,22 @@
             </div>
             <div class="feature-content">
                 <h2>All in once place, <span class="highlight-gradient">right here</span></h2>
-                <p>BOXD bundles your municipal documents with a sprinkle of magic,</p>
-                <p>transforming dull paperwork into a delightful package that's more</p>
-                <p>exciting than finding an extra fry at the bottom of the bag!</p>
+                <div class="feature-text">
+                    BOXD bundles your municipal documents with a sprinkle of magic,
+                    transforming dull paperwork into a delightful package that's more
+                    exciting than finding an extra fry at the bottom of the bag!
+                </div>
             </div>
         </section>
 
         <section class="feature-container simplified-compliance">
             <div class="feature-content">
                 <h2>From you to them, <span class="highlight-gradient">in a snap</span></h2>
-                <p>Experience lightning-fast, secure transactions! Our system boxes up</p>
-                <p>your payments and delivers them to the municipality with the speed</p>
-                <p>of a champion boxer and the security of a fortified vault.</p>
+                <div class="feature-text">
+                    Experience lightning-fast, secure transactions! Our system boxes up
+                    your payments and delivers them to the municipality with the speed
+                    of a champion boxer and the security of a fortified vault.
+                </div>
             </div>
             <div class="feature-image">
                 <img src="img/Payment Solutionspayments.png" alt="Simplified Compliance">
@@ -544,8 +727,10 @@
             </div>
             <div class="feature-content">
                 <h2>Think outside the <span class="highlight-gradient">BOXD</span></h2>
-                <p>Say goodbye to boring paperwork! Our smart automation</p>
-                <p>makes your work flow smoother than a buttered slide.</p>
+                <div class="feature-text">
+                    Say goodbye to boring paperwork! Our smart automation
+                    makes your work flow smoother than a buttered slide.
+                </div>
             </div>
         </section>
 
@@ -561,8 +746,92 @@
             </div>
         </div>
     </div>
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <p>Gathering key actors... It's gonna be a 'BOXD' office hit! 🥊📦</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="success-modal">
+        <div class="success-modal-content">
+            <h2>Brace yourself! You're about to get <span class="highlight-gradient">BOXD</span>!</h2>
+            <p>Exciting news! We're gearing up to announce our launch date soon, and as a valued member of our waitlist, you'll be among the first to know. Get ready to revolutionize your workflow!</p>
+            <div class="gif-container">
+                <img src="img/boxing.gif" alt="Celebration GIF" class="celebration-gif">
+            </div>
+            <div class="button-container">
+                <button onclick="closeSuccessModal()" class="cta-button close-button">Take Me Back</button>
+                <button onclick="window.location.href='demo.html'" class="cta-button demo-button">SEE DEMO</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
+            console.log('DOM fully loaded and parsed');
+            const form = document.getElementById('waitlistForm');
+            const loadingModal = document.getElementById('loadingModal');
+            const successModal = document.getElementById('successModal');
+            console.log('Form element:', form);
+
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    console.log('Form submit event triggered');
+                    e.preventDefault();
+                    console.log('Default form submission prevented');
+
+                    // Show loading modal
+                    loadingModal.style.display = 'block';
+
+                    const formData = new FormData(form);
+                    const email = formData.get('email');
+                    console.log('Email:', email);
+
+                    // Get the user's IP address
+                    fetch('https://api.ipify.org?format=json')
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('IP:', data.ip);
+                            formData.append('ip', data.ip);
+
+                            // Replace this URL with your Google Apps Script web app URL
+                            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzcUMryNVIzxou-2kocVv22EnSp6EfUq0cvrfYrASCn_evZl08C0tmxspyTTvlyL2dLXw/exec';
+                            console.log('Submitting to:', scriptUrl);
+
+                            fetch(scriptUrl, {
+                                method: 'POST',
+                                mode: 'no-cors',
+                                body: formData
+                            })
+                            .then(response => {
+                                console.log('Response received');
+                                // Hide loading modal
+                                loadingModal.style.display = 'none';
+                                // Show success modal
+                                successModal.style.display = 'block';
+                                form.reset();
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                // Hide loading modal
+                                loadingModal.style.display = 'none';
+                                alert('An error occurred. Please try again.');
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error getting IP:', error);
+                            // Hide loading modal
+                            loadingModal.style.display = 'none';
+                            alert('An error occurred. Please try again.');
+                        });
+                });
+            } else {
+                console.error('Form element not found');
+            }
+
             const highlightedElements = document.querySelectorAll('.highlight-gradient');
             const header = document.querySelector('.header');
             let lastScrollTop = 0;
@@ -596,7 +865,22 @@
 
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             }, false);
+
+            // Add this new code for the join button functionality
+            const joinButton = document.getElementById('joinButton');
+            const waitlistForm = document.getElementById('waitlistForm');
+
+            if (joinButton && waitlistForm) {
+                joinButton.addEventListener('click', function() {
+                    waitlistForm.scrollIntoView({ behavior: 'smooth' });
+                    waitlistForm.querySelector('input[type="email"]').focus();
+                });
+            }
         });
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
     </script>
 </body>
 </html>

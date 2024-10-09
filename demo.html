@@ -24,32 +24,37 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: var(--text-color);
-            padding-top: 80px;
+            min-height: 100vh;
         }
         .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 60px; /* Match the header height */
             width: 100%;
             max-width: none;
             margin: 0;
             padding: 2rem;
             box-sizing: border-box;
             background-color: rgba(0, 0, 0, 0.5);
-            
+            min-height: 100vh; /* Add this line */
         }
         .header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            height: 60px; /* Adjust as needed */
             z-index: 1000;
-            background-color: rgba(0, 0, 0, 0.5);
-            height: 80px;
-            transition: transform 0.2s ease-in-out; /* Changed from 0.3s to 0.2s */
+            transition: background-color 0.3s ease; /* Add smooth transition */
+        }
+        .header-scrolled {
+            background-color: rgba(0, 0, 0, 0.5); /* Background color when scrolled */
         }
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: 0 2rem; /* Remove vertical padding */
             width: 100%;
             box-sizing: border-box;
             height: 100%;
@@ -62,7 +67,7 @@
         }
         .demo-container {
             text-align: center;
-            margin-top: 0; /* Changed from 4rem to 0 */
+            margin-top: 10rem; /* Changed from 4rem to 0 */
             width: 100%; /* Ensure the container takes full width */
         }
         .demo-container h1 {
@@ -73,10 +78,11 @@
         }
         .video-container {
             position: relative;
+            
             padding-bottom: 37%; /* Adjusted for a shorter height */
             height: 0;
             overflow: hidden;
-            max-width: 66%; /* Reduced from 73% to 60% */
+            max-width: 65%; /* Reduced from 73% to 60% */
             margin: 0 auto;
         }
         .video-container iframe {
@@ -175,6 +181,16 @@
             background-color: var(--primary-color);
             color: white;
             transform: scale(1.05);
+        }
+
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .join-button {
+                margin-top: 30px; /* Add top margin for desktop view */
+                margin-right: 10px; /* Add right margin for desktop view */
+            }
+
+     
         }
 
         /* Responsive styles */
@@ -347,6 +363,30 @@
             border-radius: 10px;
             overflow: hidden;
         }
+
+        /* Add this media query at the end of your styles */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 60px; /* Adjust if your mobile header height is different */
+            }
+            .container {
+                min-height: calc(100vh - 60px); /* Adjust to match the mobile header height */
+            }
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .header {
+                background-color: rgba(0, 0, 0, 0.5); /* Always have background on mobile */
+            }
+        }
+
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .header {
+                background-color: transparent; /* Start with transparent background on desktop */
+            }
+        }
     </style>
 </head>
 <body>
@@ -464,19 +504,23 @@
                 observer.observe(el);
             });
 
-            window.addEventListener('scroll', () => {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            function handleScroll() {
+                if (window.innerWidth > 768) { // Only apply scroll-based background on desktop
+                    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-                if (scrollTop > lastScrollTop && scrollTop > 80) {
-                    // Scrolling down
-                    header.classList.add('hidden');
-                } else {
-                    // Scrolling up or at the top
-                    header.classList.remove('hidden');
+                    if (scrollTop > 0) {
+                        header.classList.add('header-scrolled');
+                    } else {
+                        header.classList.remove('header-scrolled');
+                    }
                 }
+            }
 
-                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-            }, false);
+            window.addEventListener('scroll', handleScroll, false);
+            window.addEventListener('resize', handleScroll, false); // Re-check on resize
+
+            // Initial check
+            handleScroll();
 
             const demoForm = document.getElementById('demoForm');
             

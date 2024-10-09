@@ -436,16 +436,38 @@
             // Set video volume to 50%
             if (video) {
                 video.volume = 0.5;
-            }
 
-            if (video) {
-                console.log('Adding ended event listener to video'); // Debug log
-                video.addEventListener('ended', () => {
-                    console.log('Video ended, opening modal'); // Debug log
-                    openModal();
-                });
+                // Add event listeners for fullscreenchange and webkitfullscreenchange
+                document.addEventListener('fullscreenchange', handleFullscreenChange);
+                document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+
+                // Add ended event listener
+                video.addEventListener('ended', handleVideoEnded);
             } else {
                 console.error('Video element not found'); // Error log
+            }
+
+            function handleFullscreenChange() {
+                if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                    // Fullscreen has been exited
+                    if (video.ended) {
+                        openModal();
+                    }
+                }
+            }
+
+            function handleVideoEnded() {
+                console.log('Video ended'); // Debug log
+                if (document.fullscreenElement || document.webkitFullscreenElement) {
+                    // Exit fullscreen
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                } else {
+                    openModal();
+                }
             }
 
             if (openModalBtn) {

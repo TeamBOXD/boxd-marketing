@@ -347,18 +347,19 @@
             font-size: 28px;
             font-weight: bold;
             position: absolute;
-            right: 10px; /* Adjust as needed */
-            top: 10px; /* Adjust as needed */
-            z-index: 1001;
+            left: 10px; /* Position on the left */
+            top: 10px; /* Move down slightly */
+            z-index: 10001;
             cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background */
-            border-radius: 50%; /* Make it circular */
-            width: 30px; /* Set a fixed width */
-            height: 30px; /* Set a fixed height */
-            display: flex; /* Use flexbox for centering */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            line-height: 1; /* Reset line height */
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1;
+            border: 2px solid #fff;
         }
 
         .close:hover,
@@ -366,6 +367,16 @@
             color: #ddd;
             text-decoration: none;
         }
+
+        /* Ensure the close button is visible on mobile */
+        @media (max-width: 768px) {
+            .close {
+                top: 15px; /* Slightly lower on mobile for better visibility */
+                left: 15px; /* Slightly more inward on mobile */
+            }
+        }
+
+        /* ... other existing styles ... */
 
         #calendly-embed {
             border-radius: 10px;
@@ -395,6 +406,64 @@
                 background-color: transparent; /* Start with transparent background on desktop */
             }
         }
+
+        /* Existing styles... */
+
+        #calendlyModal {
+            display: none;
+            position: fixed;
+            z-index: 1000; /* Ensure it's above most content but below the header */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: transparent;
+            margin: 120px auto 0; /* Increased top margin to push it lower */
+            padding: 0;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        /* Adjust for mobile */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 100%;
+                margin-top: 100px; /* Increased for mobile as well */
+            }
+
+            #calendly-embed {
+                height: calc(100vh - 100px); /* Adjusted to account for increased top margin */
+            }
+        }
+
+        /* Ensure the close button is visible */
+        .close {
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            right: -15px;
+            top: 12px;
+            z-index: 10001; /* Highest z-index to be on top of modal content */
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1;
+            border: 2px solid #fff;
+        }
+
+        /* ... other existing styles ... */
     </style>
 </head>
 <body>
@@ -590,6 +659,39 @@
                         });
                 });
             }
+
+            function showCalendlyModal() {
+                document.getElementById('calendlyModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                hideHeaderOnMobile();
+            }
+
+            function closeCalendlyModal() {
+                document.getElementById('calendlyModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+                showHeaderOnMobile();
+            }
+
+            function hideHeaderOnMobile() {
+                if (window.innerWidth <= 768) { // Adjust this value based on your mobile breakpoint
+                    document.querySelector('header').style.display = 'none';
+                }
+            }
+
+            function showHeaderOnMobile() {
+                if (window.innerWidth <= 768) { // Adjust this value based on your mobile breakpoint
+                    document.querySelector('header').style.display = 'block';
+                }
+            }
+
+            // Add event listener for window resize
+            window.addEventListener('resize', function() {
+                if (document.getElementById('calendlyModal').style.display === 'block') {
+                    hideHeaderOnMobile();
+                } else {
+                    showHeaderOnMobile();
+                }
+            });
         });
     </script>
 

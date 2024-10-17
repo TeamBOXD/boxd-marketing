@@ -100,28 +100,43 @@
         }
         .hero-container {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
-            margin-bottom: 6rem;
+            margin-bottom: 3rem;
             min-height: 300px;
-            gap: 4rem; /* Added to create space between content and image */
-            
-            padding-bottom: 1rem;
+            gap: 2rem;
         }
         .hero-content {
-            flex: 1.2; /* Increased from 1 to give more space to content */
-            padding-left: 200px; /* Removed padding */
+            flex: 1.5;
+            padding-left: 200px;
+        }
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%; /* Use full width of its flex container */
         }
         .hero-image {
-            flex: 0.8; /* Decreased from 1 to balance with content */
+            width: 150px;
+            height: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-bottom: 1rem;
         }
         .hero-image img {
             max-width: 100%;
-            height: auto;
-            border-radius: 38px;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .hero-image-caption {
+            font-size: 0.9rem;
+            color: var(--light-text-color);
+            width: 100%; /* Use full width of the hero-image-container */
+            max-width: none; /* Remove max-width constraint */
+            line-height: 1.4;
         }
         .hero h1 {
             font-size: 7rem;
@@ -453,6 +468,33 @@
                 bottom: 0;
                 z-index: 1000;
             }
+
+            .hero-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .hero-content {
+                padding-left: 0;
+                text-align: center;
+            }
+
+            .hero-image-container {
+                order: -1;
+                width: 100%;
+            }
+
+            .hero-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .hero-image-caption {
+                font-size: 0.8rem;
+                width: 100%;
+                padding: 0 1rem; /* Add some padding on mobile for readability */
+            }
         }
 
         /* Hamburger menu for mobile */
@@ -737,8 +779,11 @@
                     <button type="submit" class="cta-button">Join the waitlist</button>
                 </form>
             </div>
-            <div class="hero-image">
-                <img src="img/logo.png" alt="Hero Image">
+            <div class="hero-image-container">
+                <div class="hero-image">
+                    <img src="img/logo.png" alt="BOXD Logo">
+                </div>
+                <p class="hero-image-caption">BOXD is a cutting-edge municipal compliance platform that simplifies and automates the permitting process for businesses and developers. With all cities integrated into one platform, you can submit, track, and update permit applications, as well as manage all the paperwork for your projects.</p>
             </div>
         </section>
         

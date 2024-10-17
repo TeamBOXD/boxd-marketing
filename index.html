@@ -473,16 +473,19 @@
                 flex-direction: column;
                 gap: 1rem;
                 padding: 1rem;
+                align-items: center; /* Center items vertically */
             }
 
             .hero-content {
                 padding-left: 0;
                 text-align: center;
+                width: 100%; /* Ensure full width */
             }
 
             .hero-image-container {
                 order: -1;
                 width: 100%;
+                align-items: center; /* Center items horizontally */
             }
 
             .hero-image {
@@ -494,6 +497,24 @@
                 font-size: 0.8rem;
                 width: 100%;
                 padding: 0 1rem; /* Add some padding on mobile for readability */
+                text-align: center; /* Ensure text is centered */
+            }
+
+            .cta-form {
+                width: 100%; /* Ensure full width */
+                max-width: none; /* Remove any max-width constraints */
+            }
+
+            .cta-form input,
+            .cta-form button {
+                width: 100%; /* Full width for form elements */
+                margin-bottom: 0.5rem; /* Add some space between input and button */
+            }
+
+            .hero-container h1,
+            .hero-container p {
+                text-align: center; /* Center all text in hero container */
+                width: 100%; /* Ensure full width */
             }
         }
 
